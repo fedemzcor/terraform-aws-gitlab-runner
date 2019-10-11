@@ -35,6 +35,17 @@ resource "aws_security_group_rule" "runner_ssh" {
   security_group_id = aws_security_group.runner.id
 }
 
+resource "aws_security_group_rule" "allow_all" {
+  type            = "ingress"
+  from_port       = 0
+  to_port         = 65535
+  protocol        = "tcp"
+  # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
+  source_security_group_id = var.gitlab_sg_id
+
+  security_group_id = aws_security_group.runner.id
+}
+
 resource "aws_security_group" "docker_machine" {
   name_prefix = "${var.environment}-docker-machine"
   vpc_id      = var.vpc_id

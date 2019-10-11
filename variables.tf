@@ -460,3 +460,6 @@ variable "runners_services_volumes_tmpfs" {
   type        = list
   default     = []
 }
+
+variable "gitlab_sg_id" {
+}
